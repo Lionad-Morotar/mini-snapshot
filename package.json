@@ -1,10 +1,11 @@
 {
   "name": "mini-snapshot",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "minify snapshot html code",
   "main": "index.js",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
+    "html-minifier": "^4.0.0",
     "postcss": "^8.1.7"
   },
   "devDependencies": {},

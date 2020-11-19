@@ -1,5 +1,6 @@
 const postcss = require('postcss')
 const cheerio = require('cheerio')
+const minify = require('html-minifier').minify
 
 /**
  * 最小化 HTML
@@ -25,8 +26,6 @@ module.exports = function minifier(htmlraw) {
     style += item.html()
     return true
   }).replaceWith('')
-
-  // TODO HTML 摇树优化
 
   // CSS 摇树优化
   // TODO 去除空声明和其它乱七八糟的东西 ...
@@ -72,5 +71,21 @@ module.exports = function minifier(htmlraw) {
 
   $('head').append(`<style>${regenCSS}</style>`)
 
-  return $.html()
+  return minify($.html(), {
+    collapseBooleanAttributes: true,
+    collapseInlineTagWhitespace: true,
+    collapseWhitespace: true,
+    conservativeCollapse: true,
+    removeAttributeQuotes: true,
+    removeComments: true,
+    removeEmptyAttributes: true,
+    removeEmptyElements: true,
+    removeOptionalTags: true,
+    removeRedundantAttributes: true,
+    removeScriptTypeAttributes: true,
+    removeStyleLinkTypeAttributes: true,
+    removeTagWhitespace: true,
+    trimCustomFragments: true,
+    useShortDoctype: true
+  })
 }
