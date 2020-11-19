@@ -1,0 +1,28 @@
+{
+  "name": "mini-snapshot",
+  "version": "1.0.0",
+  "description": "minify snapshot html code",
+  "main": "index.js",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "postcss": "^8.1.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node index.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Lionad-Morotar/mini-snapshot.git"
+  },
+  "keywords": [
+    "minify",
+    "css-tree-shake"
+  ],
+  "author": "'Lionad' <'tangnad@qq.com'>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lionad-Morotar/mini-snapshot/issues"
+  },
+  "homepage": "https://github.com/Lionad-Morotar/mini-snapshot#readme"
+}
