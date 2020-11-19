@@ -21,3 +21,12 @@
 ## 如何使用
 
 参考 index.test.js 文件
+
+## 依赖说明
+
+- [Cheerio](https://cheerio.js.org/)，用来解析 HTML，处理 DOM 节点
+- [PostCSS](https://postcss.org/api/#postcss)，用来解析 CSS，处理 CSS 节点
+
+## 关键思路
+
+* CSS 摇树优化：遍历 CSS 选择器，并使用 Cheerio 匹配 HTML，匹配结果为空的元素则被认为是不需要用到的。
