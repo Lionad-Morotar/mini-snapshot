@@ -1,13 +1,14 @@
 const postcss = require('postcss')
+const cssnano = require('cssnano')
 const cheerio = require('cheerio')
-const minify = require('html-minifier').minify
+const htmlMinify = require('html-minifier').minify
 
 /**
  * 最小化 HTML
  * @param {String} htmlraw 传入未压缩的 HTML 源码
  * @returns {String} minhtml 返回压缩后的 HTML 源码
  */
-module.exports = function minifier(htmlraw) {
+module.exports = async function minifier(htmlraw) {
   const $ = cheerio.load(htmlraw)
 
   // 去除空脚本
@@ -69,9 +70,29 @@ module.exports = function minifier(htmlraw) {
     regenCSS = fontReMatch.join('\n') + '\n' + regenCSS
   }
 
-  $('head').append(`<style>${regenCSS}</style>`)
+  // 非语义化压缩 CSS
+  let minifiedCSS = ''
+  await new Promise((resolve, reject) => {
+    postcss([cssnano({
+      discardUnused: true,
+      mergeIdents: true,
+      reduceIdents: true,
+      zindex: true
+    })]).process(regenCSS).then(result => {
+      return resolve(result.css)
+    }).catch(error => {
+      return reject(error)
+    })
+  }).then(data => {
+    minifiedCSS = data
+  }).catch(error => {
+    minifiedCSS = regenCSS
+    console.log('css-nano 压缩出错，跳过 css-nano')
+  })
 
-  return minify($.html(), {
+  $('head').append(`<style>${minifiedCSS}</style>`)
+
+  return htmlMinify($.html(), {
     collapseBooleanAttributes: true,
     collapseInlineTagWhitespace: true,
     collapseWhitespace: true,
